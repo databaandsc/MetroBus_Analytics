@@ -17,15 +17,13 @@ Herramienta de Business Intelligence: Tableau Desktop.
 
 Para reproducir este análisis desde cero en una máquina local, sigue estos pasos en estricto orden:
 
-- Exploración y limpieza: Abre el archivo 01_eda.ipynb en Jupyter Notebook y ejecuta todas las celdas (Run All). Esto procesará los archivos CSV crudos de la carpeta /data.
+- Exploración y limpieza: Abre el archivo `01_eda.ipynb` en Jupyter Notebook y ejecuta todas las celdas (Run All). Este paso procesará los archivos CSV crudos de la carpeta `data/raw/`, aplicará los filtros de integridad referencial y exportará los datos completamente limpios a la carpeta `data/`.
 
-- Creación del esquema: En tu gestor de PostgreSQL (ej. pgAdmin), ejecuta la primera parte del script 03_sql.sql (sección DDL) para crear la base de datos y las tablas vacías del modelo en estrella.
+- Inyección de datos (y creación del esquema): Abre el archivo `02_carga_datos.ipynb` y ejecútalo de principio a fin (Run All). Este orquestador automático se encarga de ejecutar internamente el script `03_creacion_tablas.sql` (para regenerar la base de datos vacía y asegurar la idempotencia) y, acto seguido, puebla las tablas de PostgreSQL. Durante la ejecución, el script te solicitará por pantalla que introduzcas la contraseña de tu instancia local.
 
-- Inyección de datos: Abre el archivo 02_carga_datos.ipynb y ejecútalo (Run All). Durante la ejecución, el script te solicitará por pantalla que introduzcas la contraseña de tu instancia local de PostgreSQL para establecer la conexión y poblar las tablas.
+- Consultas de negocio: Abre en tu cliente SQL (ej. pgAdmin) el script `04_consultas_analiticas.sql`, conéctate a la base de datos `metrobus_db` y ejecútalo para correr las consultas y extraer los KPIs estratégicos.
 
-- Consultas de negocio: Vuelve al archivo 03_sql.sql y ejecuta las consultas analíticas (sección DML) para validar la integridad de la base de datos.
-
-- Visualización: Abre el archivo 05_Dashboard.twbx para interactuar con los cuadros de mando, y la presentación en Power Point en el archivo: 06_Presentacion.pdf.
+- Visualización: Abre el archivo 06_Dashboard.twbx para interactuar con los cuadros de mando, y la presentación en Power Point en el archivo: 07_Presentación.pptx.
 
 3. Decisiones no obvias:
 
@@ -34,4 +32,6 @@ Para este proyecto, se tomó la decisión técnica de separar el pipeline de Pyt
 4. El hallazgo más importante:
 
 El altísimo coste de las reparaciones correctivas de la flota no se debe al desgaste mecánico propio de los autobuses, sino a una altísima tasa de siniestralidad y eventos de seguridad externos en la calle. Estos incidentes imprevistos, que sufren picos extremos en abril y diciembre, obligan a inyectar miles de euros en reparaciones de urgencia, superando y desequilibrando por completo la inversión en el mantenimiento preventivo.
+
+*LOS MARKDOWN Y LA DOCUMENTACIÓN DEL PROYECTO HAN SIDO REALIZADOS CON LA AYUDA DE ASISTENTES DE INTELIGENCIA ARTIFICIAL
 

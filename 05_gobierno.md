@@ -155,7 +155,7 @@ Este documento establece las reglas de negocio, el diccionario de datos y las de
 | `dim_vehiculo` | `combustible` | Inconsistencia de formato (ej. "diesel" vs "Diesel") o valores nulos. | 5% de la flota | Normalizar a capitalización ("Diesel", "Electrico") e imputar nulos según modelo de bus. | Permite usar la columna de forma fiable para agrupaciones de emisiones. |
 | `dim_conductor` | `formacion_nivel` | Espacios en blanco no deseados (ej. "Basica "). | > 50% de conductores | Aplicar función de limpieza `TRIM()` / `.str.strip()`. | Evita generar dos categorías distintas ("Basica" y "Basica ") en el dashboard. |
 | `dim_parada` | `latitud` / `longitud` | Valores nulos (ej. parada "Centro 11"). | 1-2 filas | Imputar geolocalización aproximada usando centroide del barrio o dejar en mapa general. | Necesario para que el componente de mapa en BI no de errores al plotear rutas. |
-| `fact_viajes` | `ocupacion_pct` | Porcentajes de ocupación por encima de la capacidad (ej. > 1.0 / 100%). | 2% de los viajes punta | Capar el máximo al 100% (1.0) para reportes de ocupación y marcar fila como "Sobreaforo". | Previene cálculos engañosos en agregaciones medias de ocupación. |
+
 | `fact_incidencias` | `coste_estimado_eur` | Ausencia de coste (0.0) en averías catalogadas como "Alta" o "Crítica". | ~ 5-10% incidencias | Imputar con la mediana del coste histórico para esa misma `categoria` y `severidad`. | Un coste 0 en incidencias graves distorsiona el cálculo del ROI de mantenimiento. |
 | `dim_depot` | `barrio` | Variación en capitalización ("centro" vs "Centro"). | Múltiples registros | Normalizar todo a formato título `Title Case`. | Mantiene homogeneidad en los filtros cruzados con `dim_parada`. |
 
